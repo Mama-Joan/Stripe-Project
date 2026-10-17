@@ -39,7 +39,7 @@ npm install
 Rename `sample.env` to `.env` and populate with your Stripe account's test API keys
 
 #### Step 3: 
-Then run the application locally:
+Then run the application locally
 
 ```
 npm start
@@ -54,11 +54,21 @@ Navigate to [http://localhost:3000](http://localhost:3000) to view the index pag
 ### Set up the Server
 
 #### Install the Stripe library
+
 ```
 npm install --save stripe
 ```
+
+#### Stripe Secret API
+Added Stripe Secret API key for integration
+
+```
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+```
+
 #### Calculate Order
-Objective: To display the order amount in the checkout page for the customer to validate the amount before continuing with payment using Stripe Element. 
+
+To display the order amount in the checkout page for the customer to validate the amount before continuing with payment using Stripe Element. 
 
 Define Book Selection Library
 > This code was adapted from the original switch statement in app.js
@@ -74,6 +84,7 @@ const calculateOrderAmount = (item) => {
     default:
       return undefined;
 ```
+
 Listen & Post Calculate Order Amount
 > Code was adapted from Stripe Documentation
 ```
@@ -87,6 +98,40 @@ app.post("/calculate-order", async (req, res) => {
   }
 });
 ```
+
+#### Create Payment Intent
+Payment Intent to be created in stripe after customer submits form
+
+Listen & Create Payment Intent
+> Code was adapted from Stripe Documentation
+```
+app.post("/create-payment-intent", async (req, res) => {
+  try {
+    // Use the same server-owned order as /calculate-order.
+    const item = req.query.item;
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: calculateOrderAmount(item),
+      currency: "sgd",
+      // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
+
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch {
+    res.status(500).send({ error: "Unable to start the payment." });
+  }
+});
+```
+
+#### Success Route
+Objective: Defining the page to be displayed if payment is successful
+No changes were made since this came with the original repo
+
 
 Frontend:
 - /views/layouts: pubclic facing front-end html templates that customers see when visiting the website 
