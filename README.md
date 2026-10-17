@@ -16,6 +16,7 @@ As this is a proof-of-concept, the objectives for the design of this project are
 
 * Retain as much of the existing web architecture as possible
 * Configure the key sections, files, or pages for a successful integration and responses.
+* Integration is done with a Stripe Sandbox
 * Adapt (as much as possible) of the sample code that were documented in [Stripe's Document - Quickstart Payment Intent](https://docs.stripe.com/payments/quickstart-payment-intents)
 
 To achieve the above outcomes:
@@ -51,7 +52,11 @@ Navigate to [http://localhost:3000](http://localhost:3000) to view the index pag
 
 # Configuration
 
+<details open>
+<summary>
+  
 ### Set up the Server
+</summary>
 
 #### Install the Stripe library
 
@@ -129,8 +134,41 @@ app.post("/create-payment-intent", async (req, res) => {
 ```
 
 #### Success Route
-Objective: Defining the page to be displayed if payment is successful
-No changes were made since this came with the original repo
+Defining the page to be displayed if payment is successful
+> No changes were made since this came with the original repo
+
+</details>
+
+<details open>
+<summary>
+  
+### Checkout Page
+</summary>
+
+#### Load Stripe.js
+Stripe.js needs to be added to main.hbs to remain PCI compliant
+> Added to the head section of main.hbs
+
+```
+<script src="https://js.stripe.com/endive/stripe.js"></script>
+```
+
+#### Define payment form
+Added the "payment-element" id as part of the form to load Stripe Payment Element
+
+```
+ <form id='payment-form'name="payment-form">
+          <div>
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="you@email.com">
+          </div>
+          <div class="mt-20 text-center text-secondary border-placeholder">
+            <div id="payment-element">
+          </div>
+```
+
+</details>
+
 
 
 Frontend:
