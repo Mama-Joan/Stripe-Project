@@ -21,13 +21,10 @@ As this is a proof-of-concept, the objectives for the design of this project are
 Details on the thought process and actions taken to achieve the above objectives are documented in [Stripe Project_Joan Document](https://docs.google.com/document/d/1NKDtZG88WykOXua74mANaXGv8BU_JA0LB7Mn6zMtGsw/edit?usp=sharing)
 
 
-
-
-# Initial Setup
+# Installation
 This project kept the fundamental architecture of the eCommerce application and followed the Original_Readme.md instructions to install dependancies and add the required Stripe's Publishable and Secret API Keys. 
 
-# Audit
-To determine the files and sections that will require configurations, run through the existing repository to understand how the different areas of this eCommerce web application is connected with each other. 
+
 
 Frontend:
 - /views/layouts: pubclic facing front-end html templates that customers see when visiting the website 
