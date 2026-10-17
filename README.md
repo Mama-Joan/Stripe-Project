@@ -51,3 +51,19 @@ Step 3: change success return url to point to success.hbs
 Step 4: Check /calculate-order is referncing correctly so that stripe elements will load when user selects it.
 step 5: Check /create-payment-intent to ensure it is referencing correctly to create payment intent
 Step 6: Need to add id = submit in checkout.hbs, otherwise the js won't be able to load 
+
+Troubleshooting updates:
+1. JS script was in the wrong folder in checkout.hbs
+2. In Checkout.js, we need to define the const item that is referencing from the url and make changes in the respond to have the parameter of the item that we have selected, otherwise the code doesn't know
+
+complete.js
+1. to grab the payment status and intent id after a payment submission
+2. add the script src for complete.js to the main.hbs
+3. 
+
+success.hbs
+1. added a a section to display the confirmation payment status and ID to reflect the information returned by stripe in success.hbs
+2. added a function for defining the id and status to print
+
+Remidner:
+script src to be added to the bottom of each page

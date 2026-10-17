@@ -3,6 +3,8 @@ const stripe = Stripe("pk_test_51UPk2DIGGq3bzbrKaAed8thmRFGxkeUFtJ0Ik3koh4nTki1N
 
 let elements;
 
+const item = new URLSearchParams(window.location.search).get("item");
+
 // Keep the form disabled until Elements has initialized.
 setLoading(true);
 initialize().catch((error) => showMessage(error.message));
@@ -13,7 +15,7 @@ document.querySelector("#payment-form").addEventListener("submit", handleSubmit)
 
 async function initialize() {
   // Fetch the server-calculated total without creating a PaymentIntent.
-  const response = await fetch("/calculate-order", { method: "POST" });
+  const response = await fetch(`/calculate-order?item=${encodeURIComponent(item)}`, { method: "POST" });
   if (!response.ok) throw new Error("Unable to load the order.");
   const order = await response.json();
 
@@ -47,7 +49,7 @@ async function handleSubmit(e) {
     }
 
     // Create the PaymentIntent only after the customer submits payment details.
-    const response = await fetch("/create-payment-intent", { method: "POST" });
+    const response = await fetch(`/create-payment-intent?item=${encodeURIComponent(item)}`, { method: "POST" });
     if (!response.ok) throw new Error("Unable to start the payment. Try again.");
     const { clientSecret } = await response.json();
 
