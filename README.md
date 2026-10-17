@@ -18,7 +18,9 @@ As this is a proof-of-concept, the objectives for the design of this project are
 * Configure the key sections, files, or pages for a successful integration and responses.
 * Adapt (as much as possible) of the sample code that were documented in [Stripe's Document - Quickstart Payment Intent](https://docs.stripe.com/payments/quickstart-payment-intents)
 
-Details on the thought process and actions taken to achieve the above objectives are documented in [Stripe Project_Joan Document](https://docs.google.com/document/d/1NKDtZG88WykOXua74mANaXGv8BU_JA0LB7Mn6zMtGsw/edit?usp=sharing)
+To achieve the above outcomes:
+* General configuration sequence was made from server js > frontend html > frontend js, sticking close to Stripe Document's guide
+* Details on the thought process and actions taken to achieve the above objectives are documented in [Stripe Project_Joan Document](https://docs.google.com/document/d/1NKDtZG88WykOXua74mANaXGv8BU_JA0LB7Mn6zMtGsw/edit?usp=sharing)
 
 
 # Installation
@@ -46,9 +48,45 @@ npm start
 #### Step 4: 
 Navigate to [http://localhost:3000](http://localhost:3000) to view the index page.
 
-This project kept the fundamental architecture of the eCommerce application and followed the Original_Readme.md instructions to install dependancies and add the required Stripe's Publishable and Secret API Keys. 
 
+# Configuration
 
+### Set up the Server
+
+#### Install the Stripe library
+```
+npm install --save stripe
+```
+#### Calculate Order
+Objective: To display the order amount in the checkout page for the customer to validate the amount before continuing with payment using Stripe Element. 
+
+Define Book Selection Library
+> This code was adapted from the original switch statement in app.js
+```
+const calculateOrderAmount = (item) => {
+  switch (item) {
+    case '1':
+      return 2300;
+    case '2':
+      return 2500;
+    case '3':
+      return 2800;
+    default:
+      return undefined;
+```
+Listen & Post Calculate Order Amount
+> Code was adapted from Stripe Documentation
+```
+app.post("/calculate-order", async (req, res) => {
+  try {
+  const item = req.query.item;
+  const amount = calculateOrderAmount(item);
+    res.send({ amount, currency: "sgd" });
+  } catch {
+    res.status(500).send({ error: "Unable to calculate the order." });
+  }
+});
+```
 
 Frontend:
 - /views/layouts: pubclic facing front-end html templates that customers see when visiting the website 
