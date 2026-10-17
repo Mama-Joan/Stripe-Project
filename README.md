@@ -300,6 +300,69 @@ function setLoading(isLoading) {
 
 </details>
 
+<details open>
+<summary>
+  
+### Complete.js
+</summary>
+
+#### Create a new complete.js 
+In the original repository, there is no front-end js for powering the logic on the success page.
+A new complete.js is created under the /public/js folder. Most of code can be taken from Stripe's documentation with configurations. 
+
+#### Publishable API Key
+The publishable API key needs to be defined at the start of the page to initialize Stripe.js
+```
+const stripe = Stripe("pk_test_...)
+```
+
+
+#### Fetch the payment intent status post payment submission
+This fetch the payment parameters within the paymentintent
+
+```
+checkStatus();
+
+// Fetches the payment intent status after payment submission
+async function checkStatus() {
+  const clientSecret = new URLSearchParams(window.location.search).get(
+    "payment_intent_client_secret"
+  );
+
+  if (!clientSecret) {
+    setErrorState();
+    return;
+  }
+
+  const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+  setPaymentDetails(paymentIntent);
+}
+```
+#### Define the details that needs to be displayed on Success Page
+This fetch the payment parameters within the paymentintent
+
+```
+function setPaymentDetails(paymentIntent) {
+  document.querySelector("#payment-id").textContent = paymentIntent.id;
+  document.querySelector("#payment-status").textContent = paymentIntent.status;
+}
+```
+
+#### Edits to success.hbs
+Define where the payment id and payment status will be displayed
+```
+<div class="mt-40 text-center">
+    <div class="mt-20 text-center text-secondary border-placeholder">
+       <p>Payment ID: <div id="payment-id"></div></p>
+       <p>Payment Status: <div id="payment-status"></div></p>
+       </div>
+```
+
+Add complete.js script to the bottom of page
+```
+<script src="/js/complete.js" defer></script>
+
+```
 
 Frontend:
 - /views/layouts: pubclic facing front-end html templates that customers see when visiting the website 
