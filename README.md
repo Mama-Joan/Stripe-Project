@@ -204,7 +204,7 @@ To load the amount and currency defined from the server. These values are meant 
 
 ```
 async function initialize() {
-  const response = await fetch("/calculate-order", { method: "POST" });
+ const response = await fetch(`/calculate-order?item=${encodeURIComponent(item)}`, { method: "POST" });
   if (!response.ok) throw new Error("Unable to load the order.");
   const order = await response.json();
 
@@ -265,7 +265,7 @@ async function handleSubmit(e) {
 #### Create Payment Intent
 > Change return_url (http://localhost:3000/success)
 ```
-    const response = await fetch("/create-payment-intent", { method: "POST" });
+    const response = await fetch(`/create-payment-intent?item=${encodeURIComponent(item)}`, { method: "POST" });
     if (!response.ok) throw new Error("Unable to start the payment. Try again.");
     const { clientSecret } = await response.json();
 
