@@ -22,4 +22,18 @@ The main.hbs runs the functions defined in the js files here:
 
 The app.js file right now only has "Get" functions from the browser; In the current setup, the definitions determine which layout app.js should return to display in the browser. There are no post commands to create a payment intent with Stripe or to return any information from Stripe just yet. 
 
+Potential Congurations that I ned to make:
+app.js 
+- Need to be 
+
 # Configuration
+app.js (Backend Server)
+//Step 1: Install Stripe Library
+Following the instructions: https://docs.stripe.com/payments/quickstart-payment-intents 
+Run npm install --save stripe to install Stripe Library
+
+//Step 2: Configure Stripe Secret API Key
+Add (process.env.STRIPE_SECRET_KEY) to const stripe = require('stripe')
+ Included Calculated order amount in server side to avoid tampering with the amount on client side
+ /// Calculate Order: Add Calculate the order to send to front end, the reference the above sentence
+///Create payment intent: THen then create payemnt intent once the customer pays 
