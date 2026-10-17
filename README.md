@@ -26,7 +26,7 @@ To achieve the above outcomes:
 #### Payment Integration Flow
 The diagram below shows how the frontend, backend and Stripe interact through the process
 
-![Stripe Payment Integration Flow](images/stripe%20journey.png)
+![Stripe Payment Integration Flow](public/images/stripe%20journey.png)
 
 
 # Installation
