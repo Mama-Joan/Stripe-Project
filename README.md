@@ -1,29 +1,25 @@
-# Take home project
-This is a simple e-commerce application that a customer can use to purchase a book, but it's missing the payments functionality —  your goal is to integrate Stripe to get this application running!
+# About This Project
+This project is meant to document how Stripe Payment Element is integrated to an existing ecommerce bookstore. The objective is to get a working eCommerce application that is able to faciliate payments using Stripe Payment Element. 
 
-## Candidate instructions
-You'll receive these in email.
+# Initial Setup
+This project kept the fundamental architecture of the eCommerce application and followed the Original_Readme.md instructions to install dependancies and add the required Stripe's Publishable and Secret API Keys. 
 
-## Application overview
-This demo is written in Javascript (Node.js) with the [Express framework](https://expressjs.com/). You'll need to retrieve a set of testmode API keys from the Stripe dashboard (you can create a free test account [here](https://dashboard.stripe.com/register)) to run this locally.
+# Audit
+To determine the files and sections that will require configurations, run through the existing repository to understand how the different areas of this eCommerce web application is connected with each other. 
 
-We're using the [Bootstrap](https://getbootstrap.com/docs/4.6/getting-started/introduction/) CSS framework. It's the most popular CSS framework in the world and is pretty easy to get started with — feel free to modify styles/layout if you like. 
+Frontend:
+- /views/layouts: pubclic facing front-end html templates that customers see when visiting the website 
+    /layout/main.hbs: The main definition for headers of the templates are; the rest of the pages in checkout, index, and success would adopt the headers from main.hbs
+- /public/js: where the client that power the functionalities of the browser reside
 
-To simplify this project, we're also not using any database here, either. Instead `app.js` includes a simple switch statement to read the GET params for `item`. 
+Backend:
+- app.js: backend server that manages the overall functionalities and how this application interact with the Stripe Dashboaard.
 
-To get started, clone the repository and run `npm install` to install dependencies:
+How the Frontend and Backend Files are connected:
 
-```
-git clone https://github.com/mattmitchell6/sa-takehome-project-node && cd sa-takehome-project-node
-npm install
-```
+The main.hbs runs the functions defined in the js files here:
+<script type="text/javascript" src="/js/custom.js"></script>
 
-Rename `sample.env` to `.env` and populate with your Stripe account's test API keys
+The app.js file right now only has "Get" functions from the browser; In the current setup, the definitions determine which layout app.js should return to display in the browser. There are no post commands to create a payment intent with Stripe or to return any information from Stripe just yet. 
 
-Then run the application locally:
-
-```
-npm start
-```
-
-Navigate to [http://localhost:3000](http://localhost:3000) to view the index page.
+# Configuration
