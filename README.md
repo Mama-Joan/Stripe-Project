@@ -11,9 +11,16 @@ Working assumptions include:
 * The full end-to-end experience of the checkout process will not be demonstrated in this submission (i.e. Shipping address, discounts, promotion).
 * Future use cases are explored in the [Stripe Project_Joan Document](https://docs.google.com/document/d/1NKDtZG88WykOXua74mANaXGv8BU_JA0LB7Mn6zMtGsw/edit?usp=sharing)
 
-For simplicity, the checkout flow assumes that the customer is already authenticated and that relevant customer information, including their shipping address, has been collected and stored by the merchant's existing application.
+# Approach
+As this is a proof-of-concept, the objectives for the design of this project are:
 
-Customer authentication, address management, order fulfilment and inventory management are outside the scope of this demonstration.
+* Retain as much of the existing web architecture as possible
+* Configure the key sections, files, or pages for a successful integration and responses.
+* Adapt (as much as possible) of the sample code that were documented in [Stripe's Document - Quickstart Payment Intent](https://docs.stripe.com/payments/quickstart-payment-intents)
+
+Details on the thought process and actions taken to achieve the above objectives are documented in [Stripe Project_Joan Document](https://docs.google.com/document/d/1NKDtZG88WykOXua74mANaXGv8BU_JA0LB7Mn6zMtGsw/edit?usp=sharing)
+
+
 
 
 # Initial Setup
