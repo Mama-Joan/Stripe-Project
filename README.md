@@ -1,10 +1,15 @@
 # About This Project
-This project is meant to document how Stripe Payment Element is integrated to an existing ecommerce bookstore. The objective is to get a working eCommerce application that is able to faciliate payments using Stripe Payment Element. 
+The objective of this project is to demonstrate the integration of Stripe Payment Element to a simple eCommerce web application. 
+A successful outcome incorporates the following:
+* Select a book to purchase.
+* Checkout and purchase the item using Stripe Elements.
+* Display a confirmation of purchase to the user with the total amount of the charge and Stripe Payment Intent ID (beginning with pi_).
 
 # Assumptions
-Assumptions
-
-This application demonstrates the checkout and payment experience for an online bookstore, with a focus on integrating Stripe's Payment Element.
+Working assumptions include:
+* This project is a proof-of-concept (POC) to demonstrate the possibility of Stripe Payment Element integration on a eCommerce web application
+* The full end-to-end experience of the checkout process will not be demonstrated in this submission (i.e. Shipping address, discounts, promotion).
+* Future use cases are explored in the [Stripe Project_Joan Document](https://docs.google.com/document/d/1NKDtZG88WykOXua74mANaXGv8BU_JA0LB7Mn6zMtGsw/edit?usp=sharing)
 
 For simplicity, the checkout flow assumes that the customer is already authenticated and that relevant customer information, including their shipping address, has been collected and stored by the merchant's existing application.
 
