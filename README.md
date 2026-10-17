@@ -186,6 +186,19 @@ The publishable API key needs to be defined at the start of the page to initiali
 const stripe = Stripe("pk_test_...");
 ```
 
+#### Define what was the book selected
+checkout.js will not know what was the item that was selected, and we need to grab it from the URL
+
+```
+const item = new URLSearchParams(window.location.search).get("item");
+```
+
+Therefore, the fetch details for initialising Stripe Element and creating payment intent, needs to add the following in the fetch command
+
+```
+item=${encodeURIComponent(item)}
+```
+
 #### Load the order total & Stripe Payment Element
 To load the amount and currency defined from the server. These values are meant to display the payment form that consist the Stripe Payment Element 
 
