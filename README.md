@@ -5,13 +5,13 @@ A successful outcome incorporates the following:
 * Checkout and purchase the item using Stripe Elements.
 * Display a confirmation of purchase to the user with the total amount of the charge and Stripe Payment Intent ID (beginning with pi_).
 
-# Assumptions
+### Assumptions
 Working assumptions include:
 * This project is a proof-of-concept (POC) to demonstrate the possibility of Stripe Payment Element integration on a eCommerce web application
 * The full end-to-end experience of the checkout process will not be demonstrated in this submission (i.e. Shipping address, discounts, promotion).
 * Future use cases are explored in the [Stripe Project_Joan Document](https://docs.google.com/document/d/1NKDtZG88WykOXua74mANaXGv8BU_JA0LB7Mn6zMtGsw/edit?usp=sharing)
 
-# Approach
+### Approach
 As this is a proof-of-concept, the objectives for the design of this project are:
 
 * Retain as much of the existing web architecture as possible
@@ -22,6 +22,30 @@ Details on the thought process and actions taken to achieve the above objectives
 
 
 # Installation
+
+To get started, instructions on the ORIGINAL_README.md were followed:
+
+#### Step 1: 
+Clone Original Author's repository
+
+```
+git clone https://github.com/mattmitchell6/sa-takehome-project-node && cd sa-takehome-project-node
+npm install
+```
+
+#### Step 2: 
+Rename `sample.env` to `.env` and populate with your Stripe account's test API keys
+
+#### Step 3: 
+Then run the application locally:
+
+```
+npm start
+```
+
+#### Step 4: 
+Navigate to [http://localhost:3000](http://localhost:3000) to view the index page.
+
 This project kept the fundamental architecture of the eCommerce application and followed the Original_Readme.md instructions to install dependancies and add the required Stripe's Publishable and Secret API Keys. 
 
 
