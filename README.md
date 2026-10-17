@@ -37,3 +37,17 @@ Add (process.env.STRIPE_SECRET_KEY) to const stripe = require('stripe')
  Included Calculated order amount in server side to avoid tampering with the amount on client side
  /// Calculate Order: Add Calculate the order to send to front end, the reference the above sentence
 ///Create payment intent: THen then create payemnt intent once the customer pays 
+
+main.hbs (frontend)
+Step 1: Add Form ID
+Step 2: Injgect the div id="payment-element" under the add stripe payment enlement area
+step 3: Added     <script src="checkout.js" defer></script> to main.hbs, to ensure that this logic loads across all pages to reference the checkout.js logic when required
+Step 4: add <script src="https://js.stripe.com/endive/stripe.js"></script> the JS script to be PCI compliant to main.hbs 
+
+Checkout.js
+Step 1: Copy sample code from Stripe doc
+Step 2: Update Stripe publishable API Key
+Step 3: change success return url to point to success.hbs
+Step 4: Check /calculate-order is referncing correctly so that stripe elements will load when user selects it.
+step 5: Check /create-payment-intent to ensure it is referencing correctly to create payment intent
+Step 6: Need to add id = submit in checkout.hbs, otherwise the js won't be able to load 
