@@ -217,37 +217,25 @@ Kept this to ensure that we are able to validate form submission, so as to trigg
 document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
 ```
 
+#### Edits on checkout.hbs 
+To edit the following ids that checkout.js needs to query from
 
+Add form id
 ```
-let elements;
+ <form id='payment-form'>
+```
 
-// Keep the form disabled until Elements has initialized.
-setLoading(true);
-initialize().catch((error) => showMessage(error.message));
+Add button id
+```
+ <button id='submit'>
+```
+Add checkout.js script to bottom of page
+```
+<script src="/js/checkout.js" defer></script>
+```
 
-document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
-
-async function initialize() {
-  // Fetch the server-calculated total without creating a PaymentIntent.
-  const response = await fetch("/calculate-order", { method: "POST" });
-  if (!response.ok) throw new Error("Unable to load the order.");
-  const order = await response.json();
-
-  const appearance = {
-    theme: 'stripe',
-  };
-  elements = stripe.elements({
-    mode: "payment",
-    amount: order.amount,
-    currency: order.currency,
-    appearance,
-  });
-
-  const paymentElement = elements.create("payment", { layout: "accordion" });
-  paymentElement.mount("#payment-element");
-  setLoading(false);
-}
-
+#### Confirm Payment
+```
 async function handleSubmit(e) {
   e.preventDefault();
   if (!elements || document.querySelector("#submit").disabled) return;
@@ -259,8 +247,11 @@ async function handleSubmit(e) {
       showMessage(submitError.message);
       return;
     }
+```
 
-    // Create the PaymentIntent only after the customer submits payment details.
+#### Create Payment Intent
+> Change return_url (http://localhost:3000/success)
+```
     const response = await fetch("/create-payment-intent", { method: "POST" });
     if (!response.ok) throw new Error("Unable to start the payment. Try again.");
     const { clientSecret } = await response.json();
@@ -269,7 +260,7 @@ async function handleSubmit(e) {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: "http://localhost:4242/complete.html",
+        return_url: "http://localhost:3000/success",
       },
     });
 
@@ -281,7 +272,12 @@ async function handleSubmit(e) {
     setLoading(false);
   }
 }
+```
 
+#### UI Helpers
+> Remove codes where our frontend do not have an id for
+
+```
 // ------- UI helpers -------
 
 function showMessage(messageText) {
@@ -296,18 +292,15 @@ function setLoading(isLoading) {
   if (isLoading) {
     // Disable the button and show a spinner
     document.querySelector("#submit").disabled = true;
-    document.querySelector("#spinner").classList.remove("hidden");
-    document.querySelector("#button-text").classList.add("hidden");
   } else {
     document.querySelector("#submit").disabled = false;
-    document.querySelector("#spinner").classList.add("hidden");
-    document.querySelector("#button-text").classList.remove("hidden");
   }
 }
 ```
 
-
 </details>
+
+
 Frontend:
 - /views/layouts: pubclic facing front-end html templates that customers see when visiting the website 
     /layout/main.hbs: The main definition for headers of the templates are; the rest of the pages in checkout, index, and success would adopt the headers from main.hbs
