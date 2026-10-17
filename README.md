@@ -1,6 +1,16 @@
 # About This Project
 This project is meant to document how Stripe Payment Element is integrated to an existing ecommerce bookstore. The objective is to get a working eCommerce application that is able to faciliate payments using Stripe Payment Element. 
 
+# Assumptions
+Assumptions
+
+This application demonstrates the checkout and payment experience for an online bookstore, with a focus on integrating Stripe's Payment Element.
+
+For simplicity, the checkout flow assumes that the customer is already authenticated and that relevant customer information, including their shipping address, has been collected and stored by the merchant's existing application.
+
+Customer authentication, address management, order fulfilment and inventory management are outside the scope of this demonstration.
+
+
 # Initial Setup
 This project kept the fundamental architecture of the eCommerce application and followed the Original_Readme.md instructions to install dependancies and add the required Stripe's Publishable and Secret API Keys. 
 
