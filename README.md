@@ -169,8 +169,145 @@ Added the "payment-element" id as part of the form to load Stripe Payment Elemen
 
 </details>
 
+<details open>
+<summary>
+  
+### Checkout.js
+</summary>
+
+#### Create a new checkout.js 
+In the original repository, there is no front-end js for powering the logic on the checkout page.
+A new checkout.js is created under the /public/js folder. Most of code can be taken from Stripe's documentation with configurations. 
+
+#### Publishable API Key
+The publishable API key needs to be defined at the start of the page to initialize Stripe.js
+
+```
+const stripe = Stripe("pk_test_...");
+```
+
+#### Load the order total & Stripe Payment Element
+To load the amount and currency defined from the server. These values are meant to display the payment form that consist the Stripe Payment Element 
+
+```
+async function initialize() {
+  const response = await fetch("/calculate-order", { method: "POST" });
+  if (!response.ok) throw new Error("Unable to load the order.");
+  const order = await response.json();
+
+  const appearance = {
+    theme: 'stripe',
+  };
+  elements = stripe.elements({
+    mode: "payment",
+    amount: order.amount,
+    currency: order.currency,
+    appearance,
+  });
+
+  const paymentElement = elements.create("payment", { layout: "accordion" });
+  paymentElement.mount("#payment-element");
+  setLoading(false);
+}
+```
+
+#### Listen for form submission 
+Kept this to ensure that we are able to validate form submission, so as to trigger payment intent creation
+```
+document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
+```
 
 
+```
+let elements;
+
+// Keep the form disabled until Elements has initialized.
+setLoading(true);
+initialize().catch((error) => showMessage(error.message));
+
+document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
+
+async function initialize() {
+  // Fetch the server-calculated total without creating a PaymentIntent.
+  const response = await fetch("/calculate-order", { method: "POST" });
+  if (!response.ok) throw new Error("Unable to load the order.");
+  const order = await response.json();
+
+  const appearance = {
+    theme: 'stripe',
+  };
+  elements = stripe.elements({
+    mode: "payment",
+    amount: order.amount,
+    currency: order.currency,
+    appearance,
+  });
+
+  const paymentElement = elements.create("payment", { layout: "accordion" });
+  paymentElement.mount("#payment-element");
+  setLoading(false);
+}
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  if (!elements || document.querySelector("#submit").disabled) return;
+  setLoading(true);
+
+  try {
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      showMessage(submitError.message);
+      return;
+    }
+
+    // Create the PaymentIntent only after the customer submits payment details.
+    const response = await fetch("/create-payment-intent", { method: "POST" });
+    if (!response.ok) throw new Error("Unable to start the payment. Try again.");
+    const { clientSecret } = await response.json();
+
+    const { error } = await stripe.confirmPayment({
+      elements,
+      clientSecret,
+      confirmParams: {
+        return_url: "http://localhost:4242/complete.html",
+      },
+    });
+
+    // Successful payments redirect to the return_url. Display immediate errors.
+    if (error) showMessage(error.message);
+  } catch (error) {
+    showMessage(error.message);
+  } finally {
+    setLoading(false);
+  }
+}
+
+// ------- UI helpers -------
+
+function showMessage(messageText) {
+  const messageContainer = document.querySelector("#payment-message");
+
+  messageContainer.classList.remove("hidden");
+  messageContainer.textContent = messageText;
+}
+
+// Show a spinner on payment submission
+function setLoading(isLoading) {
+  if (isLoading) {
+    // Disable the button and show a spinner
+    document.querySelector("#submit").disabled = true;
+    document.querySelector("#spinner").classList.remove("hidden");
+    document.querySelector("#button-text").classList.add("hidden");
+  } else {
+    document.querySelector("#submit").disabled = false;
+    document.querySelector("#spinner").classList.add("hidden");
+    document.querySelector("#button-text").classList.remove("hidden");
+  }
+}
+```
+
+
+</details>
 Frontend:
 - /views/layouts: pubclic facing front-end html templates that customers see when visiting the website 
     /layout/main.hbs: The main definition for headers of the templates are; the rest of the pages in checkout, index, and success would adopt the headers from main.hbs
