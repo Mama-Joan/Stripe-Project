@@ -23,6 +23,11 @@ To achieve the above outcomes:
 * General configuration sequence was made from server js > frontend html > frontend js, sticking close to Stripe Document's guide
 * Details on the thought process and actions taken to achieve the above objectives are documented in [Stripe Project_Joan Document](https://docs.google.com/document/d/1NKDtZG88WykOXua74mANaXGv8BU_JA0LB7Mn6zMtGsw/edit?usp=sharing)
 
+#### Payment Integration Flow
+The diagram below shows how the frontend, backend and Stripe interact through the process
+
+![Stripe Payment Integration Flow](images/stripe%20journey.png)
+
 
 # Installation
 
