@@ -117,9 +117,11 @@ app.post("/create-payment-intent", async (req, res) => {
 /**
  * Success route
  */
+
 app.get('/success', function(req, res) {
   res.render('success');
 });
+
 
 /**
  * Start server

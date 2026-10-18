@@ -3,6 +3,8 @@ const stripe = Stripe("pk_test_51UPk2DIGGq3bzbrKaAed8thmRFGxkeUFtJ0Ik3koh4nTki1N
 console.log("complete.js is running!");
 checkStatus();
 
+
+
 // Fetches the payment intent status after payment submission
 async function checkStatus() {
   const clientSecret = new URLSearchParams(window.location.search).get(
@@ -15,6 +17,9 @@ async function checkStatus() {
   }
 
   const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+  console.log("PaymentIntent:", paymentIntent);
+  console.log("Amount received:", paymentIntent.amount_received);
+
 
   setPaymentDetails(paymentIntent);
 }
@@ -23,4 +28,5 @@ async function checkStatus() {
  function setPaymentDetails(paymentIntent) {
   document.querySelector("#payment-id").textContent = paymentIntent.id;
   document.querySelector("#payment-status").textContent = paymentIntent.status;
+  document.querySelector("#payment-amount").textContent = paymentIntent.amount;
 }
