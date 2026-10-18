@@ -31,10 +31,8 @@ The diagram below shows how the frontend, backend and Stripe interact through th
 
 # Installation
 
-To get started, instructions on the ORIGINAL_README.md were followed:
-
 #### Step 1: 
-Clone Original Author's repository
+Clone repository
 
 ```
 git clone [https://github.com/Mama-Joan/Stripe-Project.git]
@@ -62,16 +60,17 @@ Navigate to [http://localhost:3000](http://localhost:3000) to view the index pag
 <summary>
   
 ### Set up the Server
+For running the backend logic of managing GET and POST requests.
 </summary>
 
 #### Install the Stripe library
-
+To download Stripe assets and dependencies that are needed to run the application
 ```
 npm install --save stripe
 ```
 
 #### Stripe Secret API
-Added Stripe Secret API key for integration
+Reference Stripe Secret API key for integration
 
 ```
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -79,10 +78,11 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 #### Calculate Order
 
-To display the order amount in the checkout page for the customer to validate the amount before continuing with payment using Stripe Element. 
+To display the order amount in the checkout page for the customer to reference before continuing with payment using Stripe Element. 
 
 Define Book Selection Library
-> This code was adapted from the original switch statement in app.js
+We need to define a database for the app.js to reference for the post requests.
+> This code was adapted from the Get request switch statement in app.js
 ```
 const calculateOrderAmount = (item) => {
   switch (item) {
@@ -96,7 +96,7 @@ const calculateOrderAmount = (item) => {
       return undefined;
 ```
 
-Listen & Post Calculate Order Amount
+Receive and Respond to Calculate Order Request
 > Code was adapted from Stripe Documentation
 ```
 app.post("/calculate-order", async (req, res) => {
@@ -111,9 +111,9 @@ app.post("/calculate-order", async (req, res) => {
 ```
 
 #### Create Payment Intent
-Payment Intent to be created in stripe after customer submits form
+Payment Intent to be created in Stripe after customer submits form
 
-Listen & Create Payment Intent
+Receive & Create Payment Intent
 > Code was adapted from Stripe Documentation
 ```
 app.post("/create-payment-intent", async (req, res) => {
@@ -140,7 +140,7 @@ app.post("/create-payment-intent", async (req, res) => {
 ```
 
 #### Success Route
-Defining the page to be displayed if payment is successful
+Defining the .hbs template to render receiving a 'GET' request for 'successful payment'
 > No changes were made since this came with the original repo
 
 </details>
