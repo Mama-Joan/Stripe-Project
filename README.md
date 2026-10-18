@@ -82,7 +82,7 @@ To display the order amount in the checkout page for the customer to reference b
 
 Define Book Selection Library
 We need to define a database for the app.js to reference for the post requests.
-> This code was adapted from the Get request switch statement in app.js
+> Code was adapted from the Get request switch statement in app.js
 ```
 const calculateOrderAmount = (item) => {
   switch (item) {
@@ -114,6 +114,7 @@ app.post("/calculate-order", async (req, res) => {
 Payment Intent to be created in Stripe after customer submits form
 
 Receive & Create Payment Intent
+Receives post request from checkout.hbs to create Payment Intent in Stripe. Returns paymentIntent.client_secret when successful.
 > Code was adapted from Stripe Documentation
 ```
 app.post("/create-payment-intent", async (req, res) => {
@@ -183,7 +184,9 @@ Added the "payment-element" id as part of the form to load Stripe Payment Elemen
 
 #### Create a new checkout.js 
 In the original repository, there is no front-end js for powering the logic on the checkout page.
-A new checkout.js is created under the /public/js folder. Most of code can be taken from Stripe's documentation with configurations. 
+A new checkout.js is created under the /public/js folder. 
+
+Most of code can be taken from Stripe's documentation with configurations. 
 
 #### Publishable API Key
 The publishable API key needs to be defined at the start of the page to initialize Stripe.js
@@ -193,20 +196,21 @@ const stripe = Stripe("pk_test_...");
 ```
 
 #### Define what was the book selected
-checkout.js will not know what was the item that was selected, and we need to grab it from the URL
+checkout.js will not know what was the item that was selected, and we need to query from the URL
 
 ```
 const item = new URLSearchParams(window.location.search).get("item");
 ```
 
-Therefore, the fetch details for initialising Stripe Element and creating payment intent, needs to add the following in the fetch command
+The functions for initialising Stripe Element and creating payment intent, needs to have the selected item defined:
+> For the full code, reference the next two sections below.
 
 ```
 item=${encodeURIComponent(item)}
 ```
 
-#### Load the order total & Stripe Payment Element
-To load the amount and currency defined from the server. These values are meant to display the payment form that consist the Stripe Payment Element 
+#### Load Stripe Payment Element
+checkout.js sends a post request to app.js for order calculation. Once successful respond is received, load Stripe Element
 
 ```
 async function initialize() {
@@ -237,29 +241,15 @@ automatic_payment_methods: {
 ```
         
 #### Listen for form submission 
-Kept this to ensure that we are able to validate form submission, so as to trigger payment intent creation
+This is used to run the handleSubmit function upon receiving a successful form submission. 
 ```
 document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
 ```
 
-#### Edits on checkout.hbs 
-To edit the following ids that checkout.js needs to query from
-
-Add form id
-```
- <form id='payment-form'>
-```
-
-Add button id
-```
- <button id='submit'>
-```
-Add checkout.js script to bottom of page
-```
-<script src="/js/checkout.js" defer></script>
-```
 
 #### Confirm Payment
+Initiated when 'submit' button event is triggered. This is to validate that the payment form is indeed submitted.
+
 ```
 async function handleSubmit(e) {
   e.preventDefault();
@@ -275,7 +265,11 @@ async function handleSubmit(e) {
 ```
 
 #### Create Payment Intent
+Sends the request to post a payment intent, and validates that a payment is indeed received.
+Once validated, redirects to success page
+
 > Change return_url (http://localhost:3000/success)
+
 ```
     const response = await fetch(`/create-payment-intent?item=${encodeURIComponent(item)}`, { method: "POST" });
     if (!response.ok) throw new Error("Unable to start the payment. Try again.");
