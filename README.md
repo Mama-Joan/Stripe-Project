@@ -366,20 +366,26 @@ This fetch the payment parameters that are meant to be displayed on success.hbs
 function setPaymentDetails(paymentIntent) {
   document.querySelector("#payment-id").textContent = paymentIntent.id;
   document.querySelector("#payment-status").textContent = paymentIntent.status;
+  document.querySelector("#payment-amount").textContent = `SGD ${(paymentIntent.amount / 100)}`;
+
 }
 ```
 
 #### Edits to success.hbs
 Define where the payment id and payment status will be displayed
+
 ```
-<div class="mt-40 text-center">
+ <div class="mt-40 text-center">
     <div class="mt-20 text-center text-secondary border-placeholder">
-       <p>Payment ID: <div id="payment-id"></div></p>
-       <p>Payment Status: <div id="payment-status"></div></p>
-       </div>
+       <p>Total Order Amount: <div id="payment-amount"></div></p>
+      <p>Payment ID: <div id="payment-id"></div></p>
+      <p>Payment Status: <div id="payment-status"></div></p>
+    </div>
+  </div>
 ```
 
 Add complete.js script to the bottom of page
+
 ```
 <script src="/js/complete.js" defer></script>
 
