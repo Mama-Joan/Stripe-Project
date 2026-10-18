@@ -392,5 +392,8 @@ Add complete.js script to the bottom of page
 Once the payment integration POC is validated to be working, the following features can be added on progressively:
 * [Adding the Address Element](https://docs.stripe.com/elements/address-element) to have a complete checkout process
 * [Send order confirmation email, trigger shipment wofklow via Webhooks](https://docs.stripe.com/payments/quickstart-payment-intents#use-webhook)
+
+Other administrative use cases:
 * [Refunds Management](https://docs.stripe.com/api/refunds)
+* [Declines Management](https://docs.stripe.com/declines)
 
