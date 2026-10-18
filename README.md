@@ -35,8 +35,10 @@ The diagram below shows how the frontend, backend and Stripe interact through th
 Clone repository
 
 ```
-git clone [https://github.com/Mama-Joan/Stripe-Project.git]
-
+git clone [https://github.com/Mama-Joan/Stripe-Project.git](https://github.com/Mama-Joan/Stripe-Project.git)
+```
+Install required Node.js pacakges
+```
 npm install
 ```
 
@@ -81,7 +83,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 To display the order amount in the checkout page for the customer to reference before continuing with payment using Stripe Element. 
 
 Define Book Selection Library
-We need to define a database for the app.js to reference for the post requests.
+Defining a database
 > Code was adapted from the Get request switch statement in app.js
 ```
 const calculateOrderAmount = (item) => {
@@ -153,7 +155,7 @@ Defining the .hbs template to render receiving a 'GET' request for 'successful p
 </summary>
 
 #### Load Stripe.js
-Stripe.js needs to be added to main.hbs to remain PCI compliant
+Stripe.js is added to main.hbs to remain PCI compliant
 > Added to the head section of main.hbs
 
 ```
