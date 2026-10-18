@@ -37,7 +37,8 @@ To get started, instructions on the ORIGINAL_README.md were followed:
 Clone Original Author's repository
 
 ```
-git clone https://github.com/mattmitchell6/sa-takehome-project-node && cd sa-takehome-project-node
+git clone [https://github.com/Mama-Joan/Stripe-Project.git]
+
 npm install
 ```
 
