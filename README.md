@@ -210,7 +210,9 @@ item=${encodeURIComponent(item)}
 ```
 
 #### Load Stripe Payment Element
-checkout.js sends a post request to app.js for order calculation. Once successful respond is received, load Stripe Element
+checkout.js sends a post request to app.js for order calculation. Once successful respond is received, load Stripe Element.
+The displayed payment methods on Stripe Element are configured from Stripe Dashboard. 
+Automatic Payment Methods is set to 'enabled' to allow dynamic payment methods.
 
 ```
 async function initialize() {
@@ -335,10 +337,8 @@ The publishable API key needs to be defined at the start of the page to initiali
 const stripe = Stripe("pk_test_...)
 ```
 
-
 #### Fetch the payment intent status post payment submission
-This fetch the payment parameters within the paymentintent
-
+To fetch the payment intent status and information from the URL
 ```
 checkStatus();
 
@@ -358,7 +358,7 @@ async function checkStatus() {
 }
 ```
 #### Define the details that needs to be displayed on Success Page
-This fetch the payment parameters within the paymentintent
+This fetch the payment parameters that are meant to be displayed on success.hbs
 
 ```
 function setPaymentDetails(paymentIntent) {
@@ -382,6 +382,10 @@ Add complete.js script to the bottom of page
 <script src="/js/complete.js" defer></script>
 
 ```
+
+### APIs Used
+* Payments Intent API
+* Return_url API
 
 ### Future Possibilities
 Once the payment integration POC is validated to be working, the following features can be added on progressively:
