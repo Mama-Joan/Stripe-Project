@@ -28,5 +28,5 @@ async function checkStatus() {
  function setPaymentDetails(paymentIntent) {
   document.querySelector("#payment-id").textContent = paymentIntent.id;
   document.querySelector("#payment-status").textContent = paymentIntent.status;
-  document.querySelector("#payment-amount").textContent = paymentIntent.amount;
+  document.querySelector("#payment-amount").textContent = `SGD ${(paymentIntent.amount / 100)}`;
 }
