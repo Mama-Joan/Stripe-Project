@@ -229,6 +229,12 @@ async function initialize() {
 }
 ```
 
+Allow Stripe Elements to show dynamic payment methods to adapt to local needs 
+```
+automatic_payment_methods: {
+        enabled: true,
+```
+        
 #### Listen for form submission 
 Kept this to ensure that we are able to validate form submission, so as to trigger payment intent creation
 ```
@@ -381,3 +387,10 @@ Add complete.js script to the bottom of page
 <script src="/js/complete.js" defer></script>
 
 ```
+
+### Future Possibilities
+Once the payment integration POC is validated to be working, the following features can be added on progressively:
+* [Adding the Address Element](https://docs.stripe.com/elements/address-element) to have a complete checkout process
+* [Send order confirmation email, trigger shipment wofklow via Webhooks](https://docs.stripe.com/payments/quickstart-payment-intents#use-webhook)
+* [Refunds Management](https://docs.stripe.com/api/refunds)
+
