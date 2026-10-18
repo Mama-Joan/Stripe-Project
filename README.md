@@ -43,7 +43,7 @@ npm install
 ```
 
 #### Step 2: 
-Rename `sample.env` to `.env` and populate with your Stripe account's test API keys
+Rename `sample.env` to `.env` and populate with your Stripe account's test API keys (retrieve from your Stripe account)
 
 #### Step 3: 
 Then run the application locally
